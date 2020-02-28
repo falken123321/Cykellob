@@ -26,7 +26,12 @@ ul {
     font-weight: bolder;
 }
 
-.highscore {
+#highscoreText {
+    display: inline-block;
+    padding-left: 20px;
+}
+
+#highscore {
     display: inline-block;
     padding-left: 20px;
     padding-top: 20px;
