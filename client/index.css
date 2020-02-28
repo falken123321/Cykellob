@@ -1,0 +1,34 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.header {
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+.gridElement {
+    display: inline-block;
+    padding: 0;
+    padding-right: 20px;
+    
+    border-right-style: solid;
+    
+}
+
+ul {
+    padding-left: 25px;
+}
+
+.variableHeaders {
+    font-weight: bolder;
+}
+
+.highscore {
+    display: inline-block;
+    padding-left: 20px;
+    padding-top: 20px;
+
+}
