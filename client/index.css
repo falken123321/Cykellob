@@ -9,31 +9,19 @@
     padding-bottom: 10px;
 }
 
-.gridElement {
-    display: inline-block;
-    padding: 0;
-    padding-right: 20px;
-    
-    border-right-style: solid;
-    
-}
 
-ul {
-    padding-left: 25px;
-}
-
-.variableHeaders {
-    font-weight: bolder;
-}
-
-#highscoreText {
-    display: inline-block;
-    padding-left: 20px;
-}
-
-#highscore {
-    display: inline-block;
-    padding-left: 20px;
-    padding-top: 20px;
-
-}
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
