@@ -1,12 +1,9 @@
-
-
-
 // Fake data - could come from a database or similar
-const data = {
+const data1 = {
     userIdOne: {
       username: "jens",
       firstName: "Jens",
-      lastName: "Hansen",
+      lastName: "Jensen",
       scores: [
         { date: "2020-03-16T10:30:45", score: 7 },
         { date: "2020-03-16T12:30:45", score: 15 },
@@ -37,4 +34,4 @@ const data = {
     }
   };
   
-  export default data;
+  export default data1;

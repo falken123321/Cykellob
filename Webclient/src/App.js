@@ -13,8 +13,8 @@ function App() {
       <Tick/>
       <img src={Url} width="20%"/>
 
+      
     <Highscore/>
-    
 
     </div>
   );
