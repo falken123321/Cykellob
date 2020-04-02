@@ -2,6 +2,7 @@ import React,{useEffect,useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Highscore from './components/highscore';
+import FirebaseDataFunction from './components/FirebaseStatus.js';
 
 
 function App() {
@@ -11,10 +12,10 @@ function App() {
     <div className="App">
       <Welcome name="Kasper" />
       <Tick/>
-      <img src={Url} width="20%"/>
+      <img src={Url} width="10%"/>
 
-      
-    <Highscore/>
+    <FirebaseDataFunction/>
+
 
     </div>
   );

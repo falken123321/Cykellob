@@ -1,6 +1,7 @@
 import React from "react";
 
 import data from '../lib/fake_highscores';
+//import docRef from './Firebase.js';
 
 function Highscore() {
   return (
