@@ -1,8 +1,9 @@
 // Fake data - could come from a database or similar
+
 const data1 = {
     userIdOne: {
       username: "jens",
-      firstName: "Jens",
+      firstName: "Andreas",
       lastName: "Jensen",
       scores: [
         { date: "2020-03-16T10:30:45", score: 7 },
