@@ -1,1 +1,0 @@
-I den her mappe, skal vi modtage variable fra arduino
