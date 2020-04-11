@@ -1,6 +1,4 @@
 {
-    "firstName": "Bidhan",
-    "lastName": "Chatterjee",
-    "age": 40,
-    "email":"bidhan@example.com"
+    "nummer": 3,
+    "timeSinceRaceStart": 150
     }

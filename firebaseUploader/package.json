@@ -1,7 +1,6 @@
 {
   "name": "firebaseuploader",
   "version": "1.0.0",
-  "description": "",
   "main": "uploader.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,6 +8,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "firebase-admin": "^8.10.0"
-  }
+    "firebase-admin": "^8.10.0",
+    "serialport": "^8.0.7"
+  },
+  "devDependencies": {},
+  "keywords": [],
+  "description": ""
 }
