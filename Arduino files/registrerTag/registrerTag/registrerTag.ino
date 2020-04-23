@@ -11,6 +11,7 @@
 */
 
 #include <SoftwareSerial.h> //Used for transmitting to the device
+#include <ArduinoJson.h>
 
 SoftwareSerial softSerial(2, 3); //RX, TX
 
@@ -20,6 +21,7 @@ RFID nano;                            //Create instance
 char epc_str[15];
 char outputBuffer[3];
 int addToString = 1;
+int scannedTags = 0;
 void byte2HexStr(byte val, char *outputBuffer)
 {
   const char HEX_DIGITS[16] = "0123456789ABCDEF";
@@ -101,12 +103,17 @@ void loop()
         byte2HexStr(nano.msg[31 + x], outputBuffer);
         myStrObject += outputBuffer;
       }
-      Serial.print("Got tag: ");
-      Serial.print(myStrObject);
-      Serial.println();
-      //Serial.println(outputBuffer);
-      //Serial.print(F("]"));
-      //Serial.println();
+      //Serial.print("Got tag: ");
+      scannedTags++;
+      //Serial.print(myStrObject);
+     
+
+      DynamicJsonDocument doc(256);
+      //Creating json document for node.js
+      doc["epc"] = myStrObject;
+      doc["scannedTags"] = scannedTags;
+      serializeJson(doc, Serial);
+       Serial.println();
     }
     else if (responseType == ERROR_CORRUPT_RESPONSE)
     {
@@ -143,7 +150,7 @@ boolean setupNano(long baudRate)
     //This happens if the baud rate is correct but the module is doing a ccontinuous read
     nano.stopReading();
 
-    Serial.println(F("Module continuously reading. Asking it to stop..."));
+    //Serial.println(F("Module continuously reading. Asking it to stop..."));
 
     delay(1500);
   }
