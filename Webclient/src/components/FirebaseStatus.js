@@ -4,45 +4,56 @@ import firebase from "../lib/Firebase"
 // import firebase from "firebase";
 
 const firestore = firebase.firestore();
-const docRef = firestore.doc("Cykelløb/001");
-
 
 function FirebaseDataFunction() {
-  const thingsToDoWithDocumentData = doc => {
-    if (doc && doc.exists) {
-      const myData = doc.data();
-      console.log(myData);
-      setFirebaseData(myData);
+  const thingsToDoWithDocumentData = snapshot => {
+    if (snapshot.empty) {
+      console.log("Fejl");
+      return;
     }
+
+    let DataArray = [];
+ 
+    snapshot.forEach(doc => {
+      let DataData = doc.data();
+      DataData["key"] = doc.id;
+      DataArray.push(DataData);
+    })
+
+    setFirebaseData(DataArray);
+    console.log(DataArray[0]);
   };
 
   const getRealtimeUpdates = () => {
-    docRef.onSnapshot(thingsToDoWithDocumentData);
+    const query = firestore.collection("Cykelløb")
+    query.onSnapshot(thingsToDoWithDocumentData);
   };
 
 
   // InitialValue er brugt her fordi at React loader objektet før der er noget deri, og så crasher programmet.*
   // På denne måde laver vi værdierne som tomme på forhånd, for at undgå crash.
 
-  const initialValue = {
-    Name: "Loading...",
-    Klasse: "Loading...",
-    Nummer: "Loading...",
-    Omgange: [],
-    Test: []}
-  const [firebaseData, setFirebaseData] = useState(initialValue);
+  // const initialValue = {
+  //   Name: "Loading...",
+  //   Klasse: "Loading...",
+  //   Nummer: "Loading...",
+  //   Omgange: []}
+  const [firebaseData, setFirebaseData] = useState([]);
 
   useEffect(() => {
     getRealtimeUpdates();
-  });
+  }, [] // Tomt array for at undgå spam i konsol
+  );
 
-
-  const array1 = [1, 4, 9, 16];
   // const docRef = firestore.doc.map(item) => (
-  
+  console.log("Test FirebaseData.Name: " + firebaseData.Name);
+
+  // var omgangeTotal = Object.values(firebaseData.Omgange);
+
   return (
+
     <div>
-            <h1>Liste over alle omgange sorteret</h1>
+      <h1>Highscore over alle deltagerene</h1>
       <div>
         <label>Soter: </label>
         <select>
@@ -57,54 +68,53 @@ function FirebaseDataFunction() {
             <th>Omgange</th>
           </tr>
         </thead>
-
-        <tbody>
-
-          <tr>
-
-          </tr>
-
-
-          <tr>
-            <td>Andreas Østergaard</td>
-            <td>22</td>
-          </tr>
-          <tr>
-            <td>Lalsl Østergaard</td>
-            <td>2</td>
-          </tr>
-        </tbody>
-      </table>
-      <h1>Resultater fra alle deltagere induvidielt</h1>
-      <p>Cykkelrytter: {firebaseData.Name} </p>
-      <p>Klassetrin: {firebaseData.Klasse}</p>
-      <p>Cykkelnummer: {firebaseData.Nummer}</p>
-      <p>Cykkelnummer: {firebaseData.Test}</p>
-      
-      <h3>Antal omgange cyklet</h3>
-
-      <table>
-        <thead>
-          <tr>
-          <th>Tid</th>
-            <th>Omgangs Nummer</th>
-            
-          </tr>
-        </thead>
-
         <tbody>
           {
-            firebaseData.Omgange.map(
-              (item, i) => (
-                <tr>
-                  <td> {item.toDate().toISOString()}</td>
-                  <td>{i}</td>
-                </tr>
-              )
-            )
+            firebaseData.map((it) => (
+              <tr>
+                <td>{it.Name}</td>
+                <td>{Object.values(it.Omgange).length/2.}</td>
+              </tr>
+            ))
           }
         </tbody>
       </table>
+      
+      <div class="form">
+      <h1>Resultater fra alle deltagere induvidielt</h1>
+      
+      {
+        firebaseData.map((it, i) => (
+          <div key={i}>
+            <h3>Cykkelrytter: {it.Name} </h3>
+            <p>Klassetrin: {it.Klasse}</p>
+            <p>Cykkelnummer: {it.Nummer}</p>
+            <h4>Tabel for gange registretet</h4>
+            <table>
+              <thead>
+                <tr>
+                  <th>Tidspunkt</th>
+                  <th>Registrede gange</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  Object.values(it.Omgange).map(
+                    (item, i) => (
+                      <tr key={i}>
+                        <td> {item.toDate().toISOString()}</td>
+                        <td>{i+1}</td>
+                      </tr>
+                    )
+                  )
+                }
+              </tbody>
+            </table>
+            <p>-------------------------------------------------------------------</p>
+          </div>
+        ))
+      }
+      </div>
     </div>
   );
 }

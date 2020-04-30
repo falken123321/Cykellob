@@ -1,7 +1,5 @@
 import React,{useEffect,useState} from 'react';
-import logo from './logo.svg';
 import './App.css';
-import Highscore from './components/highscore';
 import FirebaseDataFunction from './components/FirebaseStatus.js';
 
 
