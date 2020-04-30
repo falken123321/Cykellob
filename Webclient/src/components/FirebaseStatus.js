@@ -53,14 +53,13 @@ function FirebaseDataFunction() {
   return (
 
     <div>
+      <div class="Highscores">
       <h1>Highscore over alle deltagerene</h1>
-      <div>
         <label>Soter: </label>
         <select>
           <option>Omgange (Flest først)</option>
           <option>Omgange (Færrest først)</option>
         </select>
-      </div>
       <table>
         <thead>
           <tr>
@@ -79,8 +78,9 @@ function FirebaseDataFunction() {
           }
         </tbody>
       </table>
+      </div>
       
-      <div class="form">
+      <div class="Scores">
       <h1>Resultater fra alle deltagere induvidielt</h1>
       
       {
