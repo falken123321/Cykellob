@@ -6,7 +6,7 @@ import FirebaseDataFunction from './components/FirebaseStatus.js';
 function App() {
   return (
     <div className="App">
-      <Tick/>
+     
     <FirebaseDataFunction/>
     </div>
   );
