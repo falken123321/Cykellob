@@ -2,6 +2,7 @@ import React,{useEffect,useState} from 'react';
 import './App.css';
 import FirebaseDataFunction from './components/FirebaseStatus.js';
 
+// TEST GIT CONNECTION (NEW PC)
 
 function App() {
   return (
