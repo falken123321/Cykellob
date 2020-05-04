@@ -11,7 +11,9 @@ const SORT_OPTIONS = {
   'SCORE_ASC': {column: 'OmgangeTotal', direction:'asc'},
   'SCORE_DESC': {column: 'OmgangeTotal', direction:'desc'},
   'NAVN_ASC': {column: 'Name', direction:'asc'},
-  'NAVN_DESC': {column: 'Name', direction:'desc'}
+  'NAVN_DESC': {column: 'Name', direction:'desc'},
+  'NUMMER_ASC': {column: 'Nummer', direction:'asc'},
+  'NUMMER_DESC': {column: 'Nummer', direction:'desc'}
 }
 
 const firestore = firebase.firestore();
@@ -19,7 +21,7 @@ const firestore = firebase.firestore();
 function FirebaseDataFunction() {
 
   // Sorterings hook
-  const [sortBy, setSortBy] = useState('SCORE_ASC')
+  const [sortBy, setSortBy] = useState('SCORE_DESC')
 
   const thingsToDoWithDocumentData = snapshot => {
     if (snapshot.empty) {
@@ -80,11 +82,14 @@ function FirebaseDataFunction() {
       <h1>Highscore over alle deltagerene</h1>
         <label>Soter: </label>
         <select value={sortBy} onChange={e => setSortBy(e.currentTarget.value)}>
-          <option value="SCORE_ASC">Omgange (Flest først)</option>
-          <option value="SCORE_DESC">Omgange (Færrest først)</option>
+          <option value="SCORE_DESC">Omgange (Flest først)</option>
+          <option value="SCORE_ASC">Omgange (Færrest først)</option>
           <option disabled>------</option>
           <option value="NAVN_ASC">Navn (a-z)</option>
           <option value="NAVN_DESC">Navn (z-a)</option>
+          <option disabled>------</option>
+          <option value="NUMMER_DESC">Løbsnummer (Højest først)</option>
+          <option value="NUMMER_ASC">Løbsnummer (Lavest først)</option>
         </select>
       <table>
         <thead>
@@ -114,7 +119,8 @@ function FirebaseDataFunction() {
           <div key={i}>
             <h3>Cykelrytter: {it.Name} </h3>
             <p>Klassetrin: {it.Klasse}</p>
-            <p>Cykelnummer: {it.Nummer}</p>
+            <p>Løbsnummer: {it.Nummer}</p>
+            <p>Antal omgange cyklet: {it.OmgangeTotal}</p>
             <h4>Tabel for gange registretet</h4>
             <table>
               <thead>
