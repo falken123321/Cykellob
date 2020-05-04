@@ -15,20 +15,20 @@ function App() {
 
 
 
-function Tick() {
-  const [time, setTime] = useState(new Date().toLocaleTimeString());
+// function Tick() {
+//   const [time, setTime] = useState(new Date().toLocaleTimeString());
 
 
-  const updateTick = () => {
-    setTime(new Date().toLocaleTimeString());
-  }
+//   const updateTick = () => {
+//     setTime(new Date().toLocaleTimeString());
+//   }
 
-  useEffect(() => {
-   setInterval(updateTick,1000);
-  });
+//   useEffect(() => {
+//    setInterval(updateTick,1000);
+//   });
 
 
-  return <div>Klokken er: {time} </div> ;
-}
+//   return <div>Klokken er: {time} </div> ;
+// }
 
 export default App;

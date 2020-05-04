@@ -3,9 +3,24 @@ import firebase from "../lib/Firebase"
 
 // import firebase from "firebase";
 
+// Her får .orderBy strukturen på hvad er valgt efter vores SortBy hook
+// Det er her jeg har brug for hjælp Rasmus. Name, er bare Name i firebase. Men ved ikke
+// hvordan jeg skal sortere over hvem er lænst når de alle har et array hver.
+// Har prøvet at lave mapping på alle mulige mærkelige måder men uden held.
+const SORT_OPTIONS = {
+  'SCORE_ASC': {column: 'OmgangeTotal', direction:'asc'},
+  'SCORE_DESC': {column: 'OmgangeTotal', direction:'desc'},
+  'NAVN_ASC': {column: 'Name', direction:'asc'},
+  'NAVN_DESC': {column: 'Name', direction:'desc'}
+}
+
 const firestore = firebase.firestore();
 
 function FirebaseDataFunction() {
+
+  // Sorterings hook
+  const [sortBy, setSortBy] = useState('SCORE_ASC')
+
   const thingsToDoWithDocumentData = snapshot => {
     if (snapshot.empty) {
       console.log("Fejl");
@@ -21,11 +36,13 @@ function FirebaseDataFunction() {
     })
 
     setFirebaseData(DataArray);
-    console.log(DataArray[0]);
+    // console.log(DataArray[0]);
   };
 
   const getRealtimeUpdates = () => {
     const query = firestore.collection("Cykelløb")
+    // Sortering
+    .orderBy(SORT_OPTIONS[sortBy].column, SORT_OPTIONS[sortBy].direction)
     query.onSnapshot(thingsToDoWithDocumentData);
   };
 
@@ -42,23 +59,32 @@ function FirebaseDataFunction() {
 
   useEffect(() => {
     getRealtimeUpdates();
-  }, [] // Tomt array for at undgå spam i konsol
+  }, [sortBy] // fyldt array for at undgå spam i konsol
   );
 
   // const docRef = firestore.doc.map(item) => (
-  console.log("Test FirebaseData.Name: " + firebaseData.Name);
 
-  // var omgangeTotal = Object.values(firebaseData.Omgange);
+  // var OmgangeTotal = [];
+
+  // // key{i}
+  // // Laver et array med alle omgangene i
+  // firebaseData.forEach((it) => (
+  //   OmgangeTotal.push(Object.values(it.Omgange).length/2)
+  // ))
+  
+  // console.log(OmgangeTotal)
 
   return (
-
     <div>
-      <div class="Highscores">
+      <div className="Highscores">
       <h1>Highscore over alle deltagerene</h1>
         <label>Soter: </label>
-        <select>
-          <option>Omgange (Flest først)</option>
-          <option>Omgange (Færrest først)</option>
+        <select value={sortBy} onChange={e => setSortBy(e.currentTarget.value)}>
+          <option value="SCORE_ASC">Omgange (Flest først)</option>
+          <option value="SCORE_DESC">Omgange (Færrest først)</option>
+          <option disabled>------</option>
+          <option value="NAVN_ASC">Navn (a-z)</option>
+          <option value="NAVN_DESC">Navn (z-a)</option>
         </select>
       <table>
         <thead>
@@ -69,10 +95,10 @@ function FirebaseDataFunction() {
         </thead>
         <tbody>
           {
-            firebaseData.map((it) => (
-              <tr>
+            firebaseData.map((it, i) => (
+              <tr key={i}>
                 <td>{it.Name}</td>
-                <td>{Object.values(it.Omgange).length/2.}</td>
+                <td>{it.OmgangeTotal}</td>
               </tr>
             ))
           }
@@ -80,15 +106,15 @@ function FirebaseDataFunction() {
       </table>
       </div>
       
-      <div class="Scores">
-      <h1>Resultater fra alle deltagere induvidielt</h1>
+      <div className="Scores">
+      <h1>Resultater fra alle deltagere individuel</h1>
       
       {
         firebaseData.map((it, i) => (
           <div key={i}>
-            <h3>Cykkelrytter: {it.Name} </h3>
+            <h3>Cykelrytter: {it.Name} </h3>
             <p>Klassetrin: {it.Klasse}</p>
-            <p>Cykkelnummer: {it.Nummer}</p>
+            <p>Cykelnummer: {it.Nummer}</p>
             <h4>Tabel for gange registretet</h4>
             <table>
               <thead>
@@ -110,7 +136,7 @@ function FirebaseDataFunction() {
                 }
               </tbody>
             </table>
-            <p>-------------------------------------------------------------------</p>
+            <hr/>
           </div>
         ))
       }
