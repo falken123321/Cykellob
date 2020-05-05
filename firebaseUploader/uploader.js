@@ -50,9 +50,9 @@ function doSomethingWithData(data) {
   console.log("Contents of object property:");
   
   console.log("--- data processing done -------------------");
-  var tagEpc = obj.epc;
-  var scannedTags = obj.scannedTags;
-  var elapsed_time = obj.elapsed_time;
+  let tagEpc = obj.epc;
+  let scannedTags = obj.scannedTags;
+  let elapsed_time = obj.elapsed_time;
 
 
 
@@ -61,6 +61,8 @@ function doSomethingWithData(data) {
     tagEpc,
     scannedTags,
     elapsed_time,
+    OmgangeTotal: FieldValue.increment(1),
+    timeStamp: FieldValue.arrayUnion(elapsed_time),
 },{ merge: true })
 .then(function(docRef) {
     console.log("Document written with ID: ", docRef.id);

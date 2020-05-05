@@ -103,7 +103,7 @@ function FirebaseDataFunction() {
             firebaseData.map((it, i) => (
               <tr key={i}>
                 <td>{it.Name}</td>
-                <td>{it.OmgangeTotal}</td>
+                <td>{Object.values(it.Omgange).length/2}</td>
               </tr>
             ))
           }
