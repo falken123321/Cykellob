@@ -1,14 +1,13 @@
 import React,{useEffect,useState} from 'react';
-import logo from './logo.svg';
 import './App.css';
-import Highscore from './components/highscore';
 import FirebaseDataFunction from './components/FirebaseStatus.js';
 
+// TEST GIT CONNECTION (NEW PC)
 
 function App() {
   return (
     <div className="App">
-      <Tick/>
+     
     <FirebaseDataFunction/>
     </div>
   );
@@ -16,20 +15,20 @@ function App() {
 
 
 
-function Tick() {
-  const [time, setTime] = useState(new Date().toLocaleTimeString());
+// function Tick() {
+//   const [time, setTime] = useState(new Date().toLocaleTimeString());
 
 
-  const updateTick = () => {
-    setTime(new Date().toLocaleTimeString());
-  }
+//   const updateTick = () => {
+//     setTime(new Date().toLocaleTimeString());
+//   }
 
-  useEffect(() => {
-   setInterval(updateTick,1000);
-  });
+//   useEffect(() => {
+//    setInterval(updateTick,1000);
+//   });
 
 
-  return <div>Klokken er: {time} </div> ;
-}
+//   return <div>Klokken er: {time} </div> ;
+// }
 
 export default App;
