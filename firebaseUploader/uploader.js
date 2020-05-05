@@ -9,6 +9,7 @@ let app = admin.initializeApp({
 
 
   let db = admin.firestore();
+  FieldValue = admin.firestore.FieldValue;
 
 
     
