@@ -53,11 +53,15 @@ function doSomethingWithData(data) {
   var tagEpc = obj.epc;
   var scannedTags = obj.scannedTags;
   var elapsed_time = obj.elapsed_time;
-
+  var scannedTagsToStringForTimeStampName = obj.scannedTags.toString();
 
 
   //Update firebase
   db.collection("Cykelløb").doc(tagEpc).set({
+    /*timeStamps: {
+      scannedTagsToStringForTimeStampName: elapsed_time
+    },
+    */
     tagEpc,
     scannedTags,
     elapsed_time,
@@ -68,6 +72,13 @@ function doSomethingWithData(data) {
 .catch(function(error) {
     console.error("Error adding document: ", error);
 });
+
+/*
+firebase.database().ref("Cykelløb/"+tagEpc + "/timeStamp").push(
+  elapsed_time,
+  err => console.log(err ? 'error while pushing' : 'successful push')
+)
+*/
 }
 
 
