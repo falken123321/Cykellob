@@ -10,7 +10,7 @@ let app = admin.initializeApp({
 
   let db = admin.firestore();
   FieldValue = admin.firestore.FieldValue;
-
+  Timestamp = admin.firestore.Timestamp;
 
     
 
@@ -51,9 +51,14 @@ function doSomethingWithData(data) {
   console.log("Contents of object property:");
   
   console.log("--- data processing done -------------------");
+  const updateTime = Timestamp.now();
   var tagEpc = obj.epc;
   var scannedTags = obj.scannedTags;
   var elapsed_time = obj.elapsed_time;
+  const timeStamp2 = {
+    elapsed_time,
+    timeStamp: updateTime,
+  }
 
   //Update firebase
   db.collection("Cykelløb").doc(tagEpc).set({
@@ -65,7 +70,7 @@ function doSomethingWithData(data) {
     scannedTags,
     elapsed_time,
     OmgangeTotal: FieldValue.increment(1),
-    timeStamp: FieldValue.arrayUnion(elapsed_time),
+    timeStamp: FieldValue.arrayUnion(timeStamp2),
 },{ merge: true })
 .then(function(docRef) {
     console.log("Document written with ID: ", docRef.id);

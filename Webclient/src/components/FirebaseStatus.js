@@ -134,7 +134,7 @@ function FirebaseDataFunction() {
                   Object.values(it.Omgange).map(
                     (item, i) => (
                       <tr key={i}>
-                        <td> {item.toDate().toISOString()}</td>
+                        <td> {item.toDate().toUTCString()}</td>
                         <td>{i+1}</td>
                       </tr>
                     )
