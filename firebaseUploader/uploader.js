@@ -37,8 +37,8 @@ parser.on("data", doSomethingWithData);
 
 // Callback function for processing the received data
 function doSomethingWithData(data) {
-  console.log("--- Line received on serial port ------------");
-  console.log('Raw data: ', data);
+  //console.log("--- Line received on serial port ------------");
+  //console.log('Raw data: ', data);
 
   // parse json data
   const obj = JSON.parse(data);
@@ -48,15 +48,19 @@ function doSomethingWithData(data) {
   console.log(obj);
 
   console.log("Contents of object property:");
-  console.log(obj.tagId);
+  
   console.log("--- data processing done -------------------");
-  var tagNummer = obj.tagId;
+  var tagEpc = obj.epc;
+  var scannedTags = obj.scannedTags;
+  var elapsed_time = obj.elapsed_time;
 
 
 
   //Update firebase
-  db.collection("Cykelløb").doc(tagNummer).set({
-    obj 
+  db.collection("Cykelløb").doc(tagEpc).set({
+    tagEpc,
+    scannedTags,
+    elapsed_time,
 },{ merge: true })
 .then(function(docRef) {
     console.log("Document written with ID: ", docRef.id);
@@ -65,11 +69,6 @@ function doSomethingWithData(data) {
     console.error("Error adding document: ", error);
 });
 }
-
-
-
-
-
 
 
 
