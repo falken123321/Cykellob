@@ -18,6 +18,15 @@ SoftwareSerial softSerial(2, 3); //RX, TX
 #include "SparkFun_UHF_RFID_Reader.h" //Library for controlling the M6E Nano module
 RFID nano;                            //Create instance
 
+char rx_byte = 0;
+String name_str = "";
+String klasse_str = "";
+String nummer = "";
+bool name_filled = false;
+bool klasse_filled = false;
+bool nummer_filled = false;
+
+
 char epc_str[15];
 char outputBuffer[3];
 int addToString = 1;
@@ -107,24 +116,41 @@ void loop()
       scannedTags++;
       //Serial.print(myStrObject);
      
-
+  while(!Serial.available()) {
+    
+  } 
+    
+    if (Serial.available() > 0) {    // is a character available?
+    rx_byte = Serial.read();       // get the character
+    
+    if (rx_byte != '\n') {
+      // a character of the string was received
+      name_str += rx_byte;
+    } else { 
+       
+    
       DynamicJsonDocument doc(256);
       //Creating json document for node.js
       doc["epc"] = myStrObject;
       doc["scannedTags"] = scannedTags;
+      doc["name"] = name_str;
       serializeJson(doc, Serial);
-       Serial.println();
-    }
+      Serial.println();
+      name_str = "";
+    }}}
     else if (responseType == ERROR_CORRUPT_RESPONSE)
     {
-      Serial.println("Bad CRC");
+      //Serial.println("Bad CRC");
     }
     else
-    {
+teams
       //Unknown response
-      Serial.print("Unknown error");
+      //Serial.print("Unknown error");
     }
   }
+  
+  
+  
 }
 
 //Gracefully handles a reader that is already configured and already reading continuously
