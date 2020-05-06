@@ -9,9 +9,9 @@ let app = admin.initializeApp({
 
 
   let db = admin.firestore();
-
   FieldValue = admin.firestore.FieldValue;
   Timestamp = admin.firestore.Timestamp;
+
     
 
 //Configure serial port setup
@@ -38,6 +38,8 @@ parser.on("data", doSomethingWithData);
 
 // Callback function for processing the received data
 function doSomethingWithData(data) {
+  //console.log("--- Line received on serial port ------------");
+  //console.log('Raw data: ', data);
 
   // parse json data
   const obj = JSON.parse(data);
@@ -53,10 +55,6 @@ function doSomethingWithData(data) {
   var tagEpc = obj.epc;
   var scannedTags = obj.scannedTags;
   var elapsed_time = obj.elapsed_time;
-  var Name = "test";
-  var Klasse = "1";
-  var Nummer = "99";
-
   const timeStamp2 = {
     elapsed_time,
     timeStamp: updateTime,
@@ -64,14 +62,15 @@ function doSomethingWithData(data) {
 
   //Update firebase
   db.collection("Cykelløb").doc(tagEpc).set({
-    Name,
-    Klasse,
-    Nummer,
+    /*timeStamps: {
+      scannedTagsToStringForTimeStampName: elapsed_time
+    },
+    */
     tagEpc,
     scannedTags,
     elapsed_time,
     OmgangeTotal: FieldValue.increment(1),
-    Omgange: FieldValue.arrayUnion(timeStamp2),
+    timeStamp: FieldValue.arrayUnion(timeStamp2),
 },{ merge: true })
 .then(function(docRef) {
     console.log("Document written with ID: ", docRef.id);
@@ -79,5 +78,21 @@ function doSomethingWithData(data) {
 .catch(function(error) {
     console.error("Error adding document: ", error);
 });
+
+/*
+firebase.database().ref("Cykelløb/"+tagEpc + "/timeStamp").push(
+  elapsed_time,
+  err => console.log(err ? 'error while pushing' : 'successful push')
+)
+*/
 }
+
+
+
+
+
+
+
+
+
 
