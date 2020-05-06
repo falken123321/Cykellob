@@ -18,15 +18,6 @@ SoftwareSerial softSerial(2, 3); //RX, TX
 #include "SparkFun_UHF_RFID_Reader.h" //Library for controlling the M6E Nano module
 RFID nano;                            //Create instance
 
-char rx_byte = 0;
-String name_str = "";
-String klasse_str = "";
-String nummer_str = "";
-bool name_filled = false;
-bool klasse_filled = false;
-bool nummer_filled = false;
-
-
 char epc_str[15];
 char outputBuffer[3];
 int addToString = 1;
@@ -70,38 +61,8 @@ void setup()
 
 void loop()
 {
-  
-    if (Serial.available() > 0) {    // is a character available?
-  
-    rx_byte = Serial.read();       // get the character
-    
-    if (!name_filled) {
-      if (rx_byte != '\n') {
-        // a character of the string was received
-        name_str += rx_byte;
-      } else {
-        name_filled = true;
-        }
-      } else if (name_filled && !klasse_filled) {
-          if (rx_byte != '\n') {
-           // a character of the string was received
-          klasse_str += rx_byte;
-      } else {
-        klasse_filled = true;
-        
-        }
-      } else if (name_filled && klasse_filled && !nummer_filled) {
-          if (rx_byte != '\n') {
-           // a character of the string was received
-          nummer_str += rx_byte;
-      } else {
-        nummer_filled = true;
-        
-        }
-       }
-    }
 
-    //MY CODE ABOVE^^
+  Serial.print(epc_str);
 
   if (nano.check() == true) //Check to see if any new data has come in from module
   {
@@ -146,39 +107,25 @@ void loop()
       scannedTags++;
       //Serial.print(myStrObject);
      
- // while(!Serial.available()) {
-    
-  //} //WAIT STATEMENT 
 
-
-/*
-    Serial.println("--TEST HER--");
-    Serial.println(name_str);
-    Serial.println(klasse_str);
-    Serial.println(nummer_str);
-    */ 
-    if (name_filled && klasse_filled && nummer_filled) { 
       DynamicJsonDocument doc(256);
       //Creating json document for node.js
       doc["epc"] = myStrObject;
       doc["scannedTags"] = scannedTags;
-      doc["name"] = name_str;
-      doc["klasse"] = klasse_str;
-      doc["nummer"] = nummer_str;
       serializeJson(doc, Serial);
-      Serial.println();
-      name_str = "";
-      klasse_str = "";
-      nummer_str = "";
-
-      name_filled = false;
-      klasse_filled = false;
-      nummer_filled = false;
-    }}}
-}   //END LOOP HERE
-  
-  
-
+       Serial.println();
+    }
+    else if (responseType == ERROR_CORRUPT_RESPONSE)
+    {
+      Serial.println("Bad CRC");
+    }
+    else
+    {
+      //Unknown response
+      Serial.print("Unknown error");
+    }
+  }
+}
 
 //Gracefully handles a reader that is already configured and already reading continuously
 //Because Stream does not have a .begin() we have to do this outside the library
