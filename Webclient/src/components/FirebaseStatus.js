@@ -4,9 +4,6 @@ import firebase from "../lib/Firebase"
 // import firebase from "firebase";
 
 // Her får .orderBy strukturen på hvad er valgt efter vores SortBy hook
-// Det er her jeg har brug for hjælp Rasmus. Name, er bare Name i firebase. Men ved ikke
-// hvordan jeg skal sortere over hvem er lænst når de alle har et array hver.
-// Har prøvet at lave mapping på alle mulige mærkelige måder men uden held.
 const SORT_OPTIONS = {
   'SCORE_ASC': {column: 'OmgangeTotal', direction:'asc'},
   'SCORE_DESC': {column: 'OmgangeTotal', direction:'desc'},
@@ -35,7 +32,10 @@ function FirebaseDataFunction() {
       let DataData = doc.data();
       DataData["key"] = doc.id;
       DataArray.push(DataData);
+      // DataArray.push(doc.data()) Rapport beskrivelse
     })
+
+    // propperty
 
     setFirebaseData(DataArray);
     // console.log(DataArray[0]);
@@ -116,7 +116,7 @@ function FirebaseDataFunction() {
       
       {
         firebaseData.map((it, i) => (
-          <div key={i}>
+          <div key={it.key}> 
             <h3>Cykelrytter: {it.Name} </h3>
             <p>Klassetrin: {it.Klasse}</p>
             <p>Løbsnummer: {it.Nummer}</p>
