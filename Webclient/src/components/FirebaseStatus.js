@@ -120,7 +120,7 @@ function FirebaseDataFunction() {
             <h3>Cykelrytter: {it.Name} </h3>
             <p>Klassetrin: {it.Klasse}</p>
             <p>Løbsnummer: {it.Nummer}</p>
-            <p>Antal omgange cyklet: {it.OmgangeTotal}</p>
+            <p>Antal omgange cyklet: {it.OmgangeTotal/2}</p>
             <h4>Tabel for gange registretet</h4>
             <table>
               <thead>
@@ -134,7 +134,7 @@ function FirebaseDataFunction() {
                   Object.values(it.Omgange).map(
                     (item, i) => (
                       <tr key={i}>
-                        <td> {item.toDate().toUTCString()}</td>
+                        <td> {item.timeStamp.toDate().toUTCString()}</td>
                         <td>{i+1}</td>
                       </tr>
                     )
