@@ -14,10 +14,10 @@ const rl = readline.createInterface({
 // Change the serial port to fit your serup
 // on linux the device could look like this: "/dev/tty-usbserial1"
 //const serialPortName = "/dev/tty.usbmodem14101";
-//const serialPortName = "/dev/tty.usbserial-D306EO60";
+//const serialPortName = "/dev/tty.usbserial-D306E0KB";
 const SerialPort = require("serialport");
 const Readline = require("@serialport/parser-readline");
-const serialPortName = "/dev/tty.usbserial-D306E0KB";
+const serialPortName = "/dev/tty.usbserial-D306EO60";
 const portOptions = {
     baudRate: 115200
 };

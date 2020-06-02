@@ -12,7 +12,7 @@
 
 #include <SoftwareSerial.h> //Used for transmitting to the device
 #define pc_MAX  15       // 60 er max - med 50 tags vaelg 50 pladser!
-#define TIMEOUT_MS 30000 // 30s
+#define TIMEOUT_MS 5000 // 5s
 #define DEBUG_REDBOARD    0       // 0 false .  1 true
 #define DEBUG1_REDBOARD   0       // skriv kun epc[40][41][42][tt tt tt tt] elapsed_time (7byte)
 SoftwareSerial softSerial(2, 3); //RX, TX

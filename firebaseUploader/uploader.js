@@ -27,7 +27,7 @@ const Readline = require("@serialport/parser-readline");
 // on linux the device could look like this: "/dev/tty-usbserial1"
 //const serialPortName = "/dev/tty.usbmodem14101";
 //const serialPortName = "/dev/tty.usbserial-D306EO60";
-const serialPortName = "/dev/tty.usbserial-D306E0KB";
+const serialPortName = "/dev/cu.usbserial-D306EKB";
 const portOptions = {
     baudRate: 115200
 };
@@ -53,7 +53,7 @@ async function uploadToFirebase(data) {
 
     let shouldNotUpload = await isScannerIDSame(obj.epc);
 
-
+    // TURN THIS ON AT REAL RACE WITH 2 SENSORS
     if (shouldNotUpload) {
         console.log("Discarding data");
         return;
