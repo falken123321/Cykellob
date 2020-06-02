@@ -1,14 +1,13 @@
 import React,{useEffect,useState} from 'react';
 import './App.css';
-import FirebaseDataFunction from './components/FirebaseStatus.js';
 import FirebaseDataElever from './components/FirebaseElever.js';
 
 // TEST GIT CONNECTION (NEW PC)
 
-function App() {
+function AppElever() {
   return (
-    <div className="App">
-    <FirebaseDataFunction/>
+    <div className="AppElever">
+    <FirebaseDataElever/>
     </div>
   );
 }
@@ -33,5 +32,5 @@ function App() {
 
 // export default App;
 // export default AppElever;
-export default App;
+export default AppElever;
 

@@ -101,7 +101,7 @@ function FirebaseDataFunction() {
         <tbody>
           {
             firebaseData.map((it, i) => (
-              <tr key={i}>
+              <tr key={i} className="HighscoresKort">
                 <td>{it.Name}</td>
                 <td>{Object.values(it.Omgange).length/2}</td>
               </tr>
@@ -111,12 +111,12 @@ function FirebaseDataFunction() {
       </table>
       </div>
       
-      <div className="Scores">
       <h1>Resultater fra alle deltagere individuel</h1>
-      
+      <div className="Scores">
+
       {
         firebaseData.map((it, i) => (
-          <div key={it.key}> 
+          <div className="ScoreKort" key={it.key}> 
             <h3>Cykelrytter: {it.Name} </h3>
             <p>Klassetrin: {it.Klasse}</p>
             <p>Løbsnummer: {it.Nummer}</p>
@@ -142,7 +142,6 @@ function FirebaseDataFunction() {
                 }
               </tbody>
             </table>
-            <hr/>
           </div>
         ))
       }
