@@ -5,12 +5,12 @@ import firebase from "../lib/Firebase"
 
 // Her får .orderBy strukturen på hvad er valgt efter vores SortBy hook
 const SORT_OPTIONS = {
-  'SCORE_ASC': {column: 'OmgangeTotal', direction:'asc'},
-  'SCORE_DESC': {column: 'OmgangeTotal', direction:'desc'},
-  'NAVN_ASC': {column: 'Name', direction:'asc'},
-  'NAVN_DESC': {column: 'Name', direction:'desc'},
-  'NUMMER_ASC': {column: 'Nummer', direction:'asc'},
-  'NUMMER_DESC': {column: 'Nummer', direction:'desc'}
+  'SCORE_ASC': { column: 'OmgangeTotal', direction: 'asc' },
+  'SCORE_DESC': { column: 'OmgangeTotal', direction: 'desc' },
+  'NAVN_ASC': { column: 'Name', direction: 'asc' },
+  'NAVN_DESC': { column: 'Name', direction: 'desc' },
+  'NUMMER_ASC': { column: 'Nummer', direction: 'asc' },
+  'NUMMER_DESC': { column: 'Nummer', direction: 'desc' }
 }
 
 const firestore = firebase.firestore();
@@ -27,7 +27,7 @@ function FirebaseDataFunction() {
     }
 
     let DataArray = [];
- 
+
     snapshot.forEach(doc => {
       let DataData = doc.data();
       DataData["key"] = doc.id;
@@ -43,8 +43,8 @@ function FirebaseDataFunction() {
 
   const getRealtimeUpdates = () => {
     const query = firestore.collection("Cykelløb")
-    // Sortering
-    .orderBy(SORT_OPTIONS[sortBy].column, SORT_OPTIONS[sortBy].direction)
+      // Sortering
+      .orderBy(SORT_OPTIONS[sortBy].column, SORT_OPTIONS[sortBy].direction)
     query.onSnapshot(thingsToDoWithDocumentData);
   };
 
@@ -73,13 +73,13 @@ function FirebaseDataFunction() {
   // firebaseData.forEach((it) => (
   //   OmgangeTotal.push(Object.values(it.Omgange).length/2)
   // ))
-  
+
   // console.log(OmgangeTotal)
 
   return (
     <div>
       <div className="Highscores">
-      <h1>Highscore over alle deltagerene</h1>
+        <h1>Highscore over alle deltagerene</h1>
         <label>Soter: </label>
         <select value={sortBy} onChange={e => setSortBy(e.currentTarget.value)}>
           <option value="SCORE_DESC">Omgange (Flest først)</option>
@@ -91,60 +91,60 @@ function FirebaseDataFunction() {
           <option value="NUMMER_DESC">Løbsnummer (Højest først)</option>
           <option value="NUMMER_ASC">Løbsnummer (Lavest først)</option>
         </select>
-      <table>
-        <thead>
-          <tr>
-            <th>Navn</th>
-            <th>Omgange</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            firebaseData.map((it, i) => (
-              <tr key={i} className="HighscoresKort">
-                <td>{it.Name}</td>
-                <td>{Object.values(it.Omgange).length/2}</td>
-              </tr>
-            ))
-          }
-        </tbody>
-      </table>
+        <table>
+          <thead>
+            <tr>
+              <th>Navn</th>
+              <th>Omgange</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              firebaseData.map((it, i) => (
+                <tr key={i} className="HighscoresKort">
+                  <td>{it.Name}</td>
+                  <td>{Object.values(it.Omgange).length / 2}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
       </div>
-      
+
       <h1>Resultater fra alle deltagere individuel</h1>
       <div className="Scores">
 
-      {
-        firebaseData.map((it, i) => (
-          <div className="ScoreKort" key={it.key}> 
-            <h3>Cykelrytter: {it.Name} </h3>
-            <p>Klassetrin: {it.Klasse}</p>
-            <p>Løbsnummer: {it.Nummer}</p>
-            <p>Antal omgange cyklet: {it.OmgangeTotal/2}</p>
-            <h4>Tabel for gange registretet</h4>
-            <table>
-              <thead>
-                <tr>
-                  <th>Tidspunkt</th>
-                  <th>Registrede gange</th>
-                </tr>
-              </thead>
-              <tbody>
-                {
-                  Object.values(it.Omgange).map(
-                    (item, i) => (
-                      <tr key={i}>
-                        <td> {item.timeStamp.toDate().toUTCString()}</td>
-                        <td>{i+1}</td>
-                      </tr>
+        {
+          firebaseData.map((it, i) => (
+            <div className="ScoreKort" key={it.key}>
+              <h3>Cykelrytter: {it.Name} </h3>
+              <p>Klassetrin: {it.Klasse}</p>
+              <p>Løbsnummer: {it.Nummer}</p>
+              <p>Antal omgange cyklet: {it.OmgangeTotal / 2}</p>
+              <h4>Tabel for gange registretet</h4>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Tidspunkt</th>
+                    <th>Registrede gange</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    Object.values(it.Omgange).map(
+                      (item, i) => (
+                        <tr key={i}>
+                          <td> {item.timeStamp.toDate().toUTCString()}</td>
+                          <td>{i + 1}</td>
+                        </tr>
+                      )
                     )
-                  )
-                }
-              </tbody>
-            </table>
-          </div>
-        ))
-      }
+                  }
+                </tbody>
+              </table>
+            </div>
+          ))
+        }
       </div>
     </div>
   );
