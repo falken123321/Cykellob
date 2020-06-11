@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 // import { App, AppElever } from './App.js';
 import App from './App.js'
-import AppElever from './AppElever.js'
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(<App />, document.getElementById('root'));
