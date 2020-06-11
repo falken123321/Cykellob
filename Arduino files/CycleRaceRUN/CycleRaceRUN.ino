@@ -39,6 +39,8 @@ String myStrObject2;
 char * outputBuffer_p;
 byte * val_p;
 
+long int counter;
+
 struct passingEvent {
   bool occupied;
   byte epcLSByte[3];     // epc: xx xx xx xx xx xx xx xx xx 40 41 42 = 24 aktive bit 
@@ -52,8 +54,10 @@ int pc_no; // [0..pc_MAX]
 int pc_last; // den senest ankomne pc
 bool unique;  // Is the new pc unique? If yes, insert in passingCyclist and send passingCyclist
 
+
 void setup()
 {
+  pinMode(10,OUTPUT);
   Serial.begin(115200);
   myStrObject = "0123456789ABCDEF";   // Til Initialisering af String object
   byte init_epc[13] = "0123456789AB"; // Til initialisering af String object
@@ -296,6 +300,7 @@ void loop()
         doc["epc"] = myStrObject;
         doc["scannedTags"] = scannedTags;
         doc["elapsed_time"] = passingCyclist[pc_last].elapsed_time_in_cyclerace_ms;
+        doc["tempDegC"] = nano.getTemp();
         serializeJson(doc, Serial);
         Serial.println();
         myStrObject = "";
@@ -344,7 +349,37 @@ void loop()
         Serial.print("Unknown error");
       }  
     }
-  } // if nano.check()
+  } 
+  
+  if (counter == 100000) {
+  // if nano.check()
+  int8_t t = nano.getTemp();
+  
+      if (t == -1 ){
+        //Serial.println(F("Error getting Nano internal temperature"));
+        counter = 0;
+    }
+    else {
+      //Serial.print(F("Nano internal temperature (*C): "));
+      //Serial.println(t);  
+      //Serial.println(counter);
+      counter = 0;
+    }
+
+    if (t >= 40) {
+      digitalWrite(10,HIGH); 
+      } else {
+        digitalWrite(10,LOW);
+        }
+  
+  }
+
+counter++;
+
+
+
+
+
 } // . void loop()
 
 //Gracefully handles a reader that is already configured and already reading continuously

@@ -26,8 +26,8 @@ const Readline = require("@serialport/parser-readline");
 // Change the serial port to fit your serup
 // on linux the device could look like this: "/dev/tty-usbserial1"
 //const serialPortName = "/dev/tty.usbmodem14101";
-//const serialPortName = "/dev/tty.usbserial-D306EO60";
-const serialPortName = "/dev/cu.usbserial-D306EKB";
+//const serialPortName = "/dev/tty.usbserial-D306EKB";usbserial-D306EO60
+const serialPortName = "/dev/cu.usbserial-D306EO60";
 const portOptions = {
     baudRate: 115200
 };
